@@ -19,6 +19,9 @@ def index():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    email = request.cookies.get('email')
+    if email:
+     return redirect('/dashboard')
     cur = mysql.connection.cursor()
     if request.method == "POST":
         name = request.form['name']
@@ -28,13 +31,18 @@ def register():
         cur.execute(
             'INSERT INTO users(name, email, password) VALUES(%s, %s, %s)', (name, str(email), password))
         mysql.connection.commit()
-
+        return redirect('/login')
+        
     return render_template('register.html')
-
+    
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     cur = mysql.connection.cursor()
+    email = request.cookies.get('email')
+    if email:
+     return redirect('/dashboard')
+
     if request.method == "POST":
         email = request.form['email']
         password = request.form['password']
@@ -42,10 +50,10 @@ def login():
         query = str('''select * from users where email = "''' +
                     email + '" and password = "' + password + '"')
 
-        print(query)
+        #print(query)
 
         cur.execute(query)
-        mysql.connection.commit()
+        mysql.connection.commit ()
 
         results = cur.fetchone()
 
@@ -116,6 +124,14 @@ def execute():
     # resp.set_cookie('userID', username)
 
     # return resp
+
+@app.route('/questions', methods = ['GET','POST'])
+def mcq():
+ import requests
+ x = requests.get('https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple')
+ return make_response(x.data)
+ print(x)
+ return 'success'
 
 
 if __name__ == "__main__":
