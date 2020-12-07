@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, jsonify, make_response, redirect
 from flask_mysqldb import MySQL
+import json
+
 app = Flask(__name__)
 
 
@@ -21,7 +23,7 @@ def index():
 def register():
     email = request.cookies.get('email')
     if email:
-     return redirect('/dashboard')
+        return redirect('/dashboard')
     cur = mysql.connection.cursor()
     if request.method == "POST":
         name = request.form['name']
@@ -32,16 +34,16 @@ def register():
             'INSERT INTO users(name, email, password) VALUES(%s, %s, %s)', (name, str(email), password))
         mysql.connection.commit()
         return redirect('/login')
-        
+
     return render_template('register.html')
-    
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     cur = mysql.connection.cursor()
     email = request.cookies.get('email')
     if email:
-     return redirect('/dashboard')
+        return redirect('/dashboard')
 
     if request.method == "POST":
         email = request.form['email']
@@ -50,10 +52,10 @@ def login():
         query = str('''select * from users where email = "''' +
                     email + '" and password = "' + password + '"')
 
-        #print(query)
+        # print(query)
 
         cur.execute(query)
-        mysql.connection.commit ()
+        mysql.connection.commit()
 
         results = cur.fetchone()
 
@@ -125,13 +127,26 @@ def execute():
 
     # return resp
 
-@app.route('/questions', methods = ['GET','POST'])
+
+@app.route('/questions', methods=['GET', 'POST'])
 def mcq():
- import requests
- x = requests.get('https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple')
- return make_response(x.json())
- print(x)
- return 'success'
+    import requests
+    # import json
+    data = requests.get(
+        'https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple').content
+    res = json.loads(data)
+
+    return data
+
+    # x = requests.get(
+    # 'https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple')
+    # print(x.json())
+
+    # data = x.json()
+    # questions = json.load(data)
+
+    # print(data.get("results")[0])
+    # return make_response(data)
 
 
 if __name__ == "__main__":

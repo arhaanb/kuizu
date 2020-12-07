@@ -6,5 +6,8 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-mysqldb = "*"
+requests = "*"
+json = "*"
+flask-json = "*"
 
 [dev-packages]
