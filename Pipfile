@@ -4,10 +4,22 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
-flask-mysqldb = "*"
-requests = "*"
-json = "*"
-flask-json = "*"
+certifi = "==2020.12.5"
+chardet = "==3.0.4"
+click = "==7.1.2"
+flask-json = "==0.3.4"
+flask-mysqldb = "==0.2.0"
+idna = "==2.10"
+itsdangerous = "==1.1.0"
+mysqlclient = "==2.0.1"
+requests = "==2.25.0"
+urllib3 = "==1.26.2"
+Flask = "==1.1.2"
+Jinja2 = "==2.11.2"
+MarkupSafe = "==1.1.1"
+Werkzeug = "==1.0.1"
 
 [dev-packages]
+
+[requires]
+python_version = "3.8"
