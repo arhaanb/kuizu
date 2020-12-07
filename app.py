@@ -129,7 +129,7 @@ def execute():
 def mcq():
  import requests
  x = requests.get('https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple')
- return make_response(x.data)
+ return make_response(x.json())
  print(x)
  return 'success'
 
