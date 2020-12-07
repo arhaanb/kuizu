@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, make_response, redirect
 from flask_mysqldb import MySQL
 import json
+import requests
 
 app = Flask(__name__)
 
@@ -130,17 +131,34 @@ def execute():
 
 @app.route('/questions', methods=['GET', 'POST'])
 def mcq():
-    import requests
-    # import json
-    data = requests.get(
-        'https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple').content
-    res = json.loads(data)
+    uri = "https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple"
+    try:
+        uResponse = requests.get(uri)
+    except requests.ConnectionError:
+        return "Connection Error"
+    Jresponse = uResponse.text
+    data = json.loads(Jresponse)
+
+    print(data.get('results')[0])
+
+    # displayName = data['result']
+    # print(displayName)  # <-- The display name
+    # reputation = data['items'][0]['reputation']  # <-- The reputation
 
     return data
 
+    # import requests
+    # import json
+    # data = str(requests.get(
+    #     'https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple').content)
+    # res = jsonify(data)
+
+    # return res
+
     # x = requests.get(
     # 'https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple')
-    # print(x.json())
+    # print(json.loads(data))
+    # return json.loads(data)
 
     # data = x.json()
     # questions = json.load(data)
