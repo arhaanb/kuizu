@@ -109,10 +109,13 @@ def execute():
     results = cur.fetchall()
 
     return make_response(jsonify(results))
-
-
+maindict = {}
+answerlist = []
+list1= []
+list2 = []
 @app.route('/questions', methods=['GET', 'POST'])
 def mcq():
+    maindict = {"Question1" : [] , "Question2" : [], "Question3" : [], "Question4" : [], "Question5" : []}
     uri = "https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple"
     try:
         uResponse = requests.get(uri)
@@ -120,11 +123,29 @@ def mcq():
         return "Connection Error"
     Jresponse = uResponse.text
     data = json.loads(Jresponse)
+    #print(data.get('results')[0]) 
+    #for items in data:
+    for i in range(0,1):
+        for x in (data.get('results')):
+            #print(x)
+            list1 = []
+            a = x.get('correct_answer')
+            #print(a)
+            list1.append(a)
+            b = (x.get('incorrect_answers'))
+            for y in b:
+                #print(y)
+                list1.append(y)
+                
+            
+            answerlist.append(list1)
 
-    print(data.get('results')[0])
-
-    return data
-
+                
+        
+            #for a in x.get('correct_answer'):
+             #   return i
+    print(answerlist[0])
+    return 'success'
 
 if __name__ == "__main__":
     app.run(debug=True)
