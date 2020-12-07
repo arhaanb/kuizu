@@ -53,8 +53,6 @@ def login():
         query = str('''select * from users where email = "''' +
                     email + '" and password = "' + password + '"')
 
-        # print(query)
-
         cur.execute(query)
         mysql.connection.commit()
 
@@ -65,7 +63,6 @@ def login():
             resp.set_cookie('email', email)
 
             return resp
-            # return make_response(results)
         else:
             msg = "wrong email or password"
             return render_template('login.html', value=msg)
@@ -106,27 +103,12 @@ def getUsers():
 def execute():
     # if you see this DO NOT VISIT THIS ROUTE
     cur = mysql.connection.cursor()
-    # if request.method == "POST":
-    # username = request.form['username']
-    # email = request.form['email']
-
-    # cur.execute(
-    # "CREATE TABLE users(name varchar(255), email varchar(255), password varchar(255))")
     cur.execute("show tables")
-    # cur.execute(
-    # '''INSERT INTO users(name,email) VALUES(%s,%s)''', (username, email))
     mysql.connection.commit()
 
-    # cur.execute(''' SELECT * FROM users''')
     results = cur.fetchall()
 
     return make_response(jsonify(results))
-    # return 'query executed successfully.'
-    # return render_template('login.html')
-    # resp = make_response(render_template('index.html'))
-    # resp.set_cookie('userID', username)
-
-    # return resp
 
 
 @app.route('/questions', methods=['GET', 'POST'])
@@ -141,30 +123,7 @@ def mcq():
 
     print(data.get('results')[0])
 
-    # displayName = data['result']
-    # print(displayName)  # <-- The display name
-    # reputation = data['items'][0]['reputation']  # <-- The reputation
-
     return data
-
-    # import requests
-    # import json
-    # data = str(requests.get(
-    #     'https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple').content)
-    # res = jsonify(data)
-
-    # return res
-
-    # x = requests.get(
-    # 'https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple')
-    # print(json.loads(data))
-    # return json.loads(data)
-
-    # data = x.json()
-    # questions = json.load(data)
-
-    # print(data.get("results")[0])
-    # return make_response(data)
 
 
 if __name__ == "__main__":
