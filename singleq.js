@@ -1,0 +1,1 @@
+{ 'category': 'Science: Computers', 'type': 'multiple', 'difficulty': 'easy', 'question': 'What amount of bits commonly equals one byte?', 'correct_answer': '8', 'incorrect_answers': ['1', '2', '64'] }
