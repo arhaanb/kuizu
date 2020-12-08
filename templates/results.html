@@ -1,0 +1,52 @@
+<style>
+	.red {
+		color: red;
+	}
+
+	.green {
+		color: rgb(52, 214, 52);
+	}
+</style>
+
+<h1>Here are your results</h1>
+
+<h3>Your score was {{response.score}}</h3>
+
+<hr>
+
+{% for question in response.questions %}
+<h3>{{question.question|safe}}</h3>
+
+{% for answer in question.answers %}
+
+{% if question.answers.index(answer) == question.userans %}
+
+{% if question.correctIndex == question.userans %}
+<input type="radio" checked disabled class="inp" id="{{answer.replace(" ", "")}}"
+	name={{question.question.replace(" ", "")}} value="{{answer}}">
+<label for={{answer.replace(" ", "")}} class="green" id="inputlabel">{{answer|safe}}</label><br>
+
+{% else %}
+
+<input type="radio" checked disabled class="inp" id="{{answer.replace(" ", "")}}"
+	name={{question.question.replace(" ", "")}} value="{{answer}}">
+<label for={{answer.replace(" ", "")}} class="red" id="inputlabel">{{answer|safe}}</label><br>
+
+{% endif %}
+
+{% else %}
+
+{% if question.answers.index(answer) == question.correctIndex %}
+<input type="radio" disabled class="inp" id="{{answer.replace(" ", "")}}" name={{question.question.replace(" ", "")}}
+	value="{{answer}}">
+<label for={{answer.replace(" ", "")}} class="green" id="inputlabel">{{answer|safe}}</label><br>
+{% else %}
+<input type="radio" disabled class="inp" id="{{answer.replace(" ", "")}}" name={{question.question.replace(" ", "")}}
+	value="{{answer}}">
+<label for={{answer.replace(" ", "")}} id="inputlabel">{{answer|safe}}</label><br>
+{% endif %}
+{% endif %}
+
+{% endfor %}
+<hr>
+{% endfor %}

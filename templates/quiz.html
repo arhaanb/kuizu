@@ -1,0 +1,18 @@
+<h1>Quiz Page</h1>
+
+<form method="post" action="/check">
+	{% for question in questions.questions %}
+	<h3>{{question.question|safe}}</h3>
+
+	{% for answer in question.answers %}
+	<p></p>
+
+	<input type="radio" class="inp" id="{{answer.replace(" ", "")}}" name={{question.question.replace(" ", "")}} value="{{answer}}">
+	<label for={{answer.replace(" ", "")}} id="inputlabel">{{answer|safe}}</label><br>
+
+
+	{% endfor %}
+	<hr>
+	{% endfor %}
+	<input type="submit" value="Submit">
+</form>
