@@ -1,16 +1,17 @@
-from flask import Flask, render_template, request, jsonify, make_response, redirect
+from flask import Flask, render_template, request, jsonify, make_response, redirect, session
 from flask_mysqldb import MySQL
 import json
 import requests
 import random
+import os
 
 app = Flask(__name__)
+app.secret_key = 'lolsecretkey'
 
-
-app.config['MYSQL_HOST'] = "sql12.freemysqlhosting.net"
-app.config['MYSQL_USER'] = "sql12379431"
-app.config['MYSQL_PASSWORD'] = "IAiRrxwFW4"
-app.config['MYSQL_DB'] = 'sql12379431'
+app.config['MYSQL_HOST'] = os.environ.get('MYSQL_HOST')
+app.config['MYSQL_USER'] = os.environ.get('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.environ.get('MYSQL_DB')
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
@@ -104,7 +105,15 @@ def getUsers():
 def execute():
     # if you see this DO NOT VISIT THIS ROUTE
     cur = mysql.connection.cursor()
-    cur.execute("show tables")
+    # cur.execute('''
+    #   CREATE TABLE users(
+    #     name varchar(255),
+    #     email varchar(255),
+    #     password varchar(255)
+    #   )
+    # ''')
+    cur.execute('select * from users')
+
     mysql.connection.commit()
 
     results = cur.fetchall()
@@ -145,6 +154,18 @@ def mcq():
         finalq.append(qdict)
     maindict["questions"] = finalq
     return maindict
+
+
+@app.route('/test', methods=['GET', 'POST'])
+def test():
+    username = {"haaaa": "nooooo", "poop": 'peeep'}
+    # username = session['username']
+    session['username'] = username
+
+    # return 'Logged in as ' + username + '<br>' + "<b><a href = '/logout'>click here to log out</a></b>"
+    print(session)
+    print(session['username'])
+    return "yuh"
 
 
 if __name__ == "__main__":
