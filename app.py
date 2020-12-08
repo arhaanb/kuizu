@@ -164,10 +164,10 @@ def mcq():
 def check():
     if request.method == "POST":
         data = request.form.to_dict()
-        print(data)
+        # print(data)
         quizdict = session['quiz']
         quizqs = quizdict.get('questions')
-        print(quizqs)
+        # print(quizqs)
         attempts = []
         for key, value in data.items():
             attempts.append(value)
@@ -175,12 +175,12 @@ def check():
         for q in quizqs:
             anslist = q.get('answers')
             ind = quizqs.index(q)
-            print(q)
+            # print(q)
             # print(ind)
             userans = anslist.index(attempts[ind])
             q["userans"] = userans
             if userans == q.get('correctIndex'):
-                print('correct')
+                # print('correct')
                 score = score+1
         quizdict["score"] = score
         print(score)
