@@ -11,6 +11,7 @@
 <div class="container">
 	<div class="flex-center">
 		<h1 class="bold title center">Register</h1>
+		<h6>{{msg}}</h6>
 		<p><a href="/login">Already have an account?</a></p>
 	</div>
 
@@ -20,7 +21,7 @@
 				<form method="post" action="/register" autocomplete="off">
 					<input type="text" placeholder="Name" name="name" required />
 					<input type="text" placeholder="Email" name="email" required />
-					<input type="text" placeholder="Password" name="password" required />
+					<input type="password" placeholder="Password" name="password" required />
 					<div class="flex-center">
 						<div class="six columns">
 							<input type="submit" class="button-primary" />

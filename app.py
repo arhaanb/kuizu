@@ -24,7 +24,6 @@ def index():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    variable = "Hello"
     email = request.cookies.get('email')
     if email:
         return redirect('/dashboard')
@@ -34,20 +33,14 @@ def register():
         email = request.form['email']
         password = request.form['password']
 
-        #\cur.execute('''CREATE TABLE new_users(name varchar(255),
-            #email varchar(255) PRIMARY KEY, password varchar(255)) ''')   
         try:
-            cur.execute('INSERT INTO new_users(name, email, password) VALUES(%s, %s, %s)', (name, str(email), password))           
+            cur.execute('INSERT INTO new_users(name, email, password) VALUES(%s, %s, %s)',
+                        (name, str(email), password))
             mysql.connection.commit()
             return redirect('/login')
         except:
-            return 'Email is already in use.'
-        
-        
-        
-        
-    #elif variable != True:
-      #  return redirect('/register')
+            message = 'Email is already in use.'
+            return render_template('register.html', msg=message)
 
     return render_template('register.html')
 
@@ -96,15 +89,13 @@ def dashboard():
     email = request.cookies.get('email')
     if email:
         cur = mysql.connection.cursor()
-        #cur.execute('''CREATE TABLE new_users(name varchar(255),
-         #   email varchar(255) PRIMARY KEY, password varchar(255)) ''')
-        query = str("select * from new_users where email =" + '"' + email + '"')
+        # cur.execute('''CREATE TABLE new_users(name varchar(255),
+        #   email varchar(255) PRIMARY KEY, password varchar(255)) ''')
+        query = str("select * from new_users where email =" +
+                    '"' + email + '"')
         cur.execute(query)
-
         mysql.connection.commit()
-
         results = cur.fetchone()
-        print(results)
 
         return render_template('dashboard.html', data=results)
     else:
@@ -127,13 +118,13 @@ def getUsers():
 def execute():
     # if you see this DO NOT VISIT THIS ROUTE
     cur = mysql.connection.cursor()
-    #cur.execute('''
-     #  CREATE TABLE new_users(
-      #   name varchar(255),
-       #  email varchar(255),
-        # password varchar(255)
-       #)
-     #''')
+    # cur.execute('''
+    #  CREATE TABLE new_users(
+    #   name varchar(255),
+    #  email varchar(255),
+    # password varchar(255)
+    # )
+    # ''')
     cur.execute('select * from new_users')
 
     mysql.connection.commit()
@@ -180,7 +171,6 @@ def mcq():
 
         session['quiz'] = maindict
 
-        print(session['quiz'])
         return render_template('quiz.html', questions=maindict)
     else:
         return redirect('/')
@@ -192,7 +182,6 @@ def check():
         data = request.form.to_dict()
         quizdict = session['quiz']
         quizqs = quizdict.get('questions')
-        # print(quizqs)
         attempts = []
         for key, value in data.items():
             attempts.append(value)
@@ -200,16 +189,11 @@ def check():
         for q in quizqs:
             anslist = q.get('answers')
             ind = quizqs.index(q)
-            # print(q)
-            # print(ind)
             userans = anslist.index(attempts[ind])
             q["userans"] = userans
             if userans == q.get('correctIndex'):
-                # print('correct')
                 score = score+1
         quizdict["score"] = score
-        print(score)
-        # print(attempts)
 
         return render_template('results.html', response=quizdict)
 
@@ -222,9 +206,7 @@ def test():
     session['username'] = username
 
     # return 'Logged in as ' + username + '<br>' + "<b><a href = '/logout'>click here to log out</a></b>"
-    print(session)
-    print(session['username'])
-    return "yuh"
+    return "hi"
 
 
 @app.errorhandler(404)
