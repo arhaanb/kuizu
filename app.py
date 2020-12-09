@@ -24,6 +24,7 @@ def index():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    variable = "Hello"
     email = request.cookies.get('email')
     if email:
         return redirect('/dashboard')
@@ -33,10 +34,20 @@ def register():
         email = request.form['email']
         password = request.form['password']
 
-        cur.execute(
-            'INSERT INTO users(name, email, password) VALUES(%s, %s, %s)', (name, str(email), password))
-        mysql.connection.commit()
-        return redirect('/login')
+        #\cur.execute('''CREATE TABLE new_users(name varchar(255),
+            #email varchar(255) PRIMARY KEY, password varchar(255)) ''')   
+        try:
+            cur.execute('INSERT INTO new_users(name, email, password) VALUES(%s, %s, %s)', (name, str(email), password))           
+            mysql.connection.commit()
+            return redirect('/login')
+        except:
+            return 'Email is already in use.'
+        
+        
+        
+        
+    #elif variable != True:
+      #  return redirect('/register')
 
     return render_template('register.html')
 
@@ -52,7 +63,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        query = str('''select * from users where email = "''' +
+        query = str('''select * from new_users where email = "''' +
                     email + '" and password = "' + password + '"')
 
         cur.execute(query)
@@ -85,14 +96,9 @@ def dashboard():
     email = request.cookies.get('email')
     if email:
         cur = mysql.connection.cursor()
-        # cur.execute('''
-        #   CREATE TABLE users(
-        #     name varchar(255),
-        #     email varchar(255),
-        #     password varchar(255)
-        #   )
-        # ''')
-        query = str("select * from users where email =" + '"' + email + '"')
+        #cur.execute('''CREATE TABLE new_users(name varchar(255),
+         #   email varchar(255) PRIMARY KEY, password varchar(255)) ''')
+        query = str("select * from new_users where email =" + '"' + email + '"')
         cur.execute(query)
 
         mysql.connection.commit()
@@ -109,7 +115,7 @@ def dashboard():
 def getUsers():
     cur = mysql.connection.cursor()
 
-    cur.execute("select * from users")
+    cur.execute("select * from new_users")
     mysql.connection.commit()
 
     results = cur.fetchall()
@@ -121,14 +127,14 @@ def getUsers():
 def execute():
     # if you see this DO NOT VISIT THIS ROUTE
     cur = mysql.connection.cursor()
-    # cur.execute('''
-    #   CREATE TABLE users(
-    #     name varchar(255),
-    #     email varchar(255),
-    #     password varchar(255)
-    #   )
-    # ''')
-    cur.execute('select * from users')
+    #cur.execute('''
+     #  CREATE TABLE new_users(
+      #   name varchar(255),
+       #  email varchar(255),
+        # password varchar(255)
+       #)
+     #''')
+    cur.execute('select * from new_users')
 
     mysql.connection.commit()
 
