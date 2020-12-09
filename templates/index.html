@@ -9,17 +9,56 @@
 		margin-bottom: 0.5em;
 	}
 
+	footer.footer {
+		display: none;
+	}
+
+	.vhnew {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		height: 90vh;
+	}
+
 	@media (max-width: 750px) {
 		.by {
 			font-size: 1em;
 		}
 	}
+
+	.item {
+		position: absolute;
+	}
+
+	.green {
+		top: 0;
+		right: 0;
+		width: 30%;
+	}
+
+	.blue {
+		left: 0;
+		bottom: 3em;
+		width: 20%;
+	}
+
+	.pink {
+		bottom: 0;
+		left: 0;
+		width: 20%;
+	}
 </style>
 
+<img src="/static/items/blue.svg" alt="item" class="item blue">
+<img src="/static/items/green.svg" alt="item" class="item green">
+<img src="/static/items/pink.svg" alt="item" class="item pink">
+
 <div class="container">
-	<div class="vh">
+	<div class="vhnew">
 		<img src="/static/kuizu.svg" id="logo" alt="">
-		<h5 class="by center">Made by <span class="med">Arhaan Bahadur</span> and <span class="med">Hrijul Chauhan</span></h5>
+		<h5 class="by center">Made by <span class="med">Arhaan Bahadur</span> and <span class="med">Hrijul Chauhan</span>
+		</h5>
 		<div class="flex">
 			<a href="/register">
 				<button class="button-primary">Get Started</button>
