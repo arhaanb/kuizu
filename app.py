@@ -84,7 +84,23 @@ def logout():
 def dashboard():
     email = request.cookies.get('email')
     if email:
-        return render_template('dashboard.html')
+        cur = mysql.connection.cursor()
+        # cur.execute('''
+        #   CREATE TABLE users(
+        #     name varchar(255),
+        #     email varchar(255),
+        #     password varchar(255)
+        #   )
+        # ''')
+        query = str("select * from users where email =" + '"' + email + '"')
+        cur.execute(query)
+
+        mysql.connection.commit()
+
+        results = cur.fetchone()
+        print(results)
+
+        return render_template('dashboard.html', data=results)
     else:
         return redirect('/')
 
@@ -129,42 +145,45 @@ list2 = []
 
 @app.route('/questions', methods=['GET', 'POST'])
 def mcq():
-    maindict = {}
-    finalq = []
-    uri = "https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple"
-    try:
-        uResponse = requests.get(uri)
-    except requests.ConnectionError:
-        return "Connection Error"
-    Jresponse = uResponse.text
-    data = json.loads(Jresponse)
-    questions = data.get('results')
+    email = request.cookies.get('email')
+    if email:
+        maindict = {}
+        finalq = []
+        uri = "https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple"
+        try:
+            uResponse = requests.get(uri)
+        except requests.ConnectionError:
+            return "Connection Error"
+        Jresponse = uResponse.text
+        data = json.loads(Jresponse)
+        questions = data.get('results')
 
-    for ques in questions:
-        qdict = {}
-        anslist = []
-        anslist.append(ques['correct_answer'])
-        for ans in ques['incorrect_answers']:
-            anslist.append(ans)
-        random.shuffle(anslist)
-        correctIndex = anslist.index(ques['correct_answer'])
-        qdict["question"] = ques['question']
-        qdict["answers"] = anslist
-        qdict["correctIndex"] = correctIndex
-        finalq.append(qdict)
-    maindict["questions"] = finalq
+        for ques in questions:
+            qdict = {}
+            anslist = []
+            anslist.append(ques['correct_answer'])
+            for ans in ques['incorrect_answers']:
+                anslist.append(ans)
+            random.shuffle(anslist)
+            correctIndex = anslist.index(ques['correct_answer'])
+            qdict["question"] = ques['question']
+            qdict["answers"] = anslist
+            qdict["correctIndex"] = correctIndex
+            finalq.append(qdict)
+        maindict["questions"] = finalq
 
-    session['quiz'] = maindict
+        session['quiz'] = maindict
 
-    print(session['quiz'])
-    return render_template('quiz.html', questions=maindict)
+        print(session['quiz'])
+        return render_template('quiz.html', questions=maindict)
+    else:
+        return redirect('/')
 
 
-@app.route('/check', methods=['GET', 'POST'])
+@app.route('/check', methods=['POST'])
 def check():
     if request.method == "POST":
         data = request.form.to_dict()
-        # print(data)
         quizdict = session['quiz']
         quizqs = quizdict.get('questions')
         # print(quizqs)
@@ -187,7 +206,6 @@ def check():
         # print(attempts)
 
         return render_template('results.html', response=quizdict)
-    return 'yuhhh'
 
 
 @app.route('/test', methods=['GET', 'POST'])
@@ -201,6 +219,24 @@ def test():
     print(session)
     print(session['username'])
     return "yuh"
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(405)
+def error1(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def error2(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
 
 
 if __name__ == "__main__":

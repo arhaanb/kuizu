@@ -1,4 +1,39 @@
-<h1>Home Page</h1>
+{% extends 'layout.html' %}
 
-<a href="/register">Register</a>
-<a href="/login">Login</a>
+{% block body %}
+
+<style>
+	.by {
+		margin-top: 1em;
+		font-size: 1.4em;
+		margin-bottom: 0.5em;
+	}
+
+	@media (max-width: 750px) {
+		.by {
+			font-size: 1em;
+		}
+	}
+</style>
+
+<div class="container">
+	<div class="vh">
+		<img src="/static/kuizu.svg" id="logo" alt="">
+		<h5 class="by center">Made by <span class="med">Arhaan Bahadur</span> and <span class="med">Hrijul Chauhan</span></h5>
+		<div class="flex">
+			<a href="/register">
+				<button class="button-primary">Get Started</button>
+			</a>
+
+			<a href="/login">
+				<button>Login</button>
+			</a>
+		</div>
+		<!-- <h1>Home Page</h1>
+
+	<a href="/register">Register</a>
+	<a href="/login">Login</a> -->
+	</div>
+</div>
+
+{% endblock %}

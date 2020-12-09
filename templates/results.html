@@ -1,3 +1,7 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
 <style>
 	.red {
 		color: red;
@@ -6,47 +10,97 @@
 	.green {
 		color: rgb(52, 214, 52);
 	}
+
+	.title {
+		margin-top: 1em;
+	}
+
+	.flex-home {
+		display: flex;
+		justify-content: felx-start;
+		align-items: center;
+	}
+
+	.flex-home button {
+		margin-right: 1em;
+	}
+
+	.flex-home.top {
+		margin-top: 1em;
+	}
 </style>
 
-<h1>Here are your results</h1>
+<div class="container">
+	<h1 class="bold title">Results</h1>
 
-<h3>Your score was {{response.score}}</h3>
+	<h5>Your score was <span class="med">{{response.score}}</span></h5>
+	<div class="flex-home top">
+		<a href="/questions">
+			<button class="button-primary top">
+				Take another quiz
+			</button>
+		</a>
+		<a href="/dashboard">
+			<button class="button-primary top">
+				home
+			</button>
+		</a>
+	</div>
+	<hr>
 
-<hr>
+	{% for question in response.questions %}
+	<h5>{{question.question|safe}}</h5>
+	<br>
+	<div class="radio-wrap">
+		{% for answer in question.answers %}
 
-{% for question in response.questions %}
-<h3>{{question.question|safe}}</h3>
+		{% if question.answers.index(answer) == question.userans %}
 
-{% for answer in question.answers %}
+		{% if question.correctIndex == question.userans %}
+		<input type="radio" checked disabled class="inp" id="{{answer.replace(" ", "")}}"
+			name={{question.question.replace(" ", "")}} value="{{answer}}">
+		<label for={{answer.replace(" ", "")}} class="green" id="inputlabel">{{answer|safe}}</label><br>
+		<br>
+		{% else %}
 
-{% if question.answers.index(answer) == question.userans %}
+		<input type="radio" checked disabled class="inp" id="{{answer.replace(" ", "")}}"
+			name={{question.question.replace(" ", "")}} value="{{answer}}">
+		<label for={{answer.replace(" ", "")}} class="red" id="inputlabel">{{answer|safe}}</label><br>
+		<br>
+		{% endif %}
 
-{% if question.correctIndex == question.userans %}
-<input type="radio" checked disabled class="inp" id="{{answer.replace(" ", "")}}"
-	name={{question.question.replace(" ", "")}} value="{{answer}}">
-<label for={{answer.replace(" ", "")}} class="green" id="inputlabel">{{answer|safe}}</label><br>
+		{% else %}
 
-{% else %}
+		{% if question.answers.index(answer) == question.correctIndex %}
+		<input type="radio" disabled class="inp" id="{{answer.replace(" ", "")}}"
+			name={{question.question.replace(" ", "")}} value="{{answer}}">
+		<label for={{answer.replace(" ", "")}} class="green" id="inputlabel">{{answer|safe}}</label><br>
+		<br>
+		{% else %}
+		<input type="radio" disabled class="inp" id="{{answer.replace(" ", "")}}"
+			name={{question.question.replace(" ", "")}} value="{{answer}}">
+		<label for={{answer.replace(" ", "")}} id="inputlabel">{{answer|safe}}</label><br>
+		<br>
+		{% endif %}
+		{% endif %}
 
-<input type="radio" checked disabled class="inp" id="{{answer.replace(" ", "")}}"
-	name={{question.question.replace(" ", "")}} value="{{answer}}">
-<label for={{answer.replace(" ", "")}} class="red" id="inputlabel">{{answer|safe}}</label><br>
+		{% endfor %}
+	</div>
 
-{% endif %}
-
-{% else %}
-
-{% if question.answers.index(answer) == question.correctIndex %}
-<input type="radio" disabled class="inp" id="{{answer.replace(" ", "")}}" name={{question.question.replace(" ", "")}}
-	value="{{answer}}">
-<label for={{answer.replace(" ", "")}} class="green" id="inputlabel">{{answer|safe}}</label><br>
-{% else %}
-<input type="radio" disabled class="inp" id="{{answer.replace(" ", "")}}" name={{question.question.replace(" ", "")}}
-	value="{{answer}}">
-<label for={{answer.replace(" ", "")}} id="inputlabel">{{answer|safe}}</label><br>
-{% endif %}
-{% endif %}
-
-{% endfor %}
-<hr>
-{% endfor %}
+	<hr>
+	{% endfor %}
+	<div class="flex-home">
+		<a href="/questions">
+			<button class="button-primary top">
+				Take another quiz
+			</button>
+		</a>
+		<a href="/dashboard">
+			<button class="button-primary top">
+				home
+			</button>
+		</a>
+	</div>
+	<br><br><br>
+</div>
+{% endblock %}

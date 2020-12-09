@@ -1,18 +1,52 @@
-<h1>Quiz Page</h1>
+{% extends 'layout.html' %}
 
-<form method="post" action="/check">
-	{% for question in questions.questions %}
-	<h3>{{question.question|safe}}</h3>
+{% block body %}
 
-	{% for answer in question.answers %}
-	<p></p>
+<style>
+	.title {
+		margin-top: 1em;
+	}
+	.danger {
+		margin-top: 1em;
+		border: none;
+		background-color: rgb(255, 92, 92);
+		color: #fff;
+	}
+	.danger:hover {
+		border: none;
+		background-color: rgb(207, 59, 59);
+		color: #fff;
+	}
+</style>
 
-	<input type="radio" class="inp" id="{{answer.replace(" ", "")}}" name={{question.question.replace(" ", "")}} value="{{answer}}">
-	<label for={{answer.replace(" ", "")}} id="inputlabel">{{answer|safe}}</label><br>
+<div class="container">
+	<h1 class="bold title">Quiz</h1>
+	<a href="/dashboard">
+		<button class="danger">End Quiz</button>
+	</a>
+	<br>
+	<br>
+	<form method="post" action="/check">
+		{% for question in questions.questions %}
+		<h5>{{question.question|safe}}</h5>
+
+		{% for answer in question.answers %}
+
+		<br>
+		<input type="radio" class="inp" required id="{{answer.replace(" ", "")}}" name={{question.question.replace(" ", "")}}
+			value="{{answer}}">
+		<label for={{answer.replace(" ", "")}} id="inputlabel">{{answer|safe}}</label><br>
 
 
-	{% endfor %}
-	<hr>
-	{% endfor %}
-	<input type="submit" value="Submit">
-</form>
+		{% endfor %}
+		<hr>
+		{% endfor %}
+		<div class="flex-center">
+			<div class="three columns">
+				<input type="submit" class="button-primary" value="Submit">
+			</div>
+		</div>
+		<br><br>
+	</form>
+</div>
+{% endblock %}

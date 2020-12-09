@@ -1,10 +1,34 @@
-<h1>Login</h1>
-<h5>{{ value }}</h5>
+{% extends 'layout.html' %}
 
-<form method="post" action="/login">
-	<input type="text" placeholder="Email" name="email" required />
-	<br>
-	<input type="text" placeholder="Password" name="password" required />
-	<br>
-	<input type="submit" />
-</form>
+{% block body %}
+
+<style>
+	.title {
+		margin-top: 5em;
+	}
+</style>
+
+<div class="container">
+	<div class="flex-center">
+		<h1 class="bold title">Login</h1>
+		<h6>{{ value }}</h6>
+		<p><a href="/register">Don't have an account?</a></p>
+	</div>
+
+	<div class="row">
+		<div class="flex-center">
+			<div class="six columns">
+				<form method="post" action="/login" autocomplete="off">
+					<input type="text" placeholder="Email" name="email" required />
+					<input type="password" placeholder="Password" name="password" required />
+					<div class="flex-center">
+						<div class="six columns">
+							<input type="submit" class="button-primary" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

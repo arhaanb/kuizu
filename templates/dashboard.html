@@ -1,6 +1,32 @@
-<h1>Dashboard</h1>
+{% extends 'layout.html' %}
 
-<a href="/questions">Start a quiz</a>
-<br><br>
+{% block body %}
 
-<a href="/logout">logout</a>
+<style>
+	.title {
+		margin: 1em 0;
+	}
+</style>
+
+<div class="container">
+	<h1 class="bold title center">Dashboard</h1>
+
+
+	<h3 class="center">Hi, {{data.name.split(' ')[0]}}!</h3>
+
+	<div class="flex">
+		<a href="/questions">
+			<button class="button-primary">
+				Start a quiz
+			</button>
+		</a>
+
+		<a href="/logout">
+			<button>
+				Logout
+			</button>
+		</a>
+	</div>
+</div>
+
+{% endblock %}
