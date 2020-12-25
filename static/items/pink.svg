@@ -1,10 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="470" height="497" viewBox="0 0 470 497">
-  <defs>
-    <clipPath id="clip-pink">
-      <rect width="470" height="497"/>
-    </clipPath>
-  </defs>
-  <g id="pink" clip-path="url(#clip-pink)">
-    <circle id="Ellipse_1" data-name="Ellipse 1" cx="277" cy="277" r="277" transform="translate(-262 110)" fill="rgba(255,142,210,0.72)"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="470" height="497" viewBox="0 0 470 497"><defs><clipPath id="clip-pink"><rect width="470" height="497"/></clipPath></defs><g id="pink" clip-path="url(#clip-pink)"><circle id="Ellipse_1" cx="277" cy="277" r="277" fill="rgba(255,142,210,0.72)" data-name="Ellipse 1" transform="translate(-262 110)"/></g></svg>
