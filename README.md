@@ -1,10 +1,12 @@
-# Kuizu
+[<img src="./static/kuizu.png" width="100%" />](https://arhaanb.co/kuizu)
 
-> Class 12 Computer Science Project made by **[Arhaan Bahadur](https://arhaanb.co)** and **Hrijul Chauhan**. View the report [here](https://arhaanb.co/kuizu-present).
+> Class 12 Computer Science Project made by **[Arhaan Bahadur](https://arhaanb.co)** and **Hrijul Chauhan**.
 
-A trivia app built using Flask and MySQL.
+**[Kuizu](https://arhaanb.co/kuizu)** — A trivia app built using Flask and MySQL.
 
-[<img src="https://i.postimg.cc/XqKcNh0Y/12-9-inch-i-Pad-Pro.png" width="100%" />](https://arhaanb.co/kuizu)
+- [Live Application](https://arhaanb.co/kuizu)
+- [Presentation](https://arhaanb.co/kuizu-present)
+- [Branding](https://www.behance.net/gallery/109419377/Kuizu-A-Quiz-App)
 
 ### Functionality:
 - Login/Register
