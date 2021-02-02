@@ -1,10 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="461" height="766" viewBox="0 0 461 766">
-  <defs>
-    <clipPath id="clip-blue">
-      <rect width="461" height="766"/>
-    </clipPath>
-  </defs>
-  <g id="blue" clip-path="url(#clip-blue)">
-    <rect id="Rectangle_9" data-name="Rectangle 9" width="394" height="394" transform="translate(0 104.032) rotate(45)" fill="rgba(142,180,255,0.65)"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="461" height="766" viewBox="0 0 461 766"><defs><clipPath id="clip-blue"><rect width="461" height="766"/></clipPath></defs><g id="blue" clip-path="url(#clip-blue)"><rect id="Rectangle_9" width="394" height="394" fill="rgba(142,180,255,0.65)" data-name="Rectangle 9" transform="translate(0 104.032) rotate(45)"/></g></svg>
