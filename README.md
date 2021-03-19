@@ -14,3 +14,8 @@
 - Attempt Quizzes
 - Get Results
 - Fetches Questions from [Open Trivia DB](https://opentdb.com)
+
+### Development
+1. Install dependencies `pipenv install -r requirements.txt`
+2. Start a virtual environment `pipenv shell`
+3. Run the app `flask run`
